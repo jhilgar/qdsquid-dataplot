@@ -20,3 +20,13 @@ See [this](https://www.mathworks.com/help/matlab/matlab_prog/variable-names.html
 * **Molecular Weight**: Sample molecular weight in g mol<sup>-1</sup>
 * **Size**: Sample molar diamagnetism (put 0 if uncalculated)
 * **Shape**: Not used
+
+From a parsed file, susceptibility (χT (emu K mol<sup>-1</sup>) vs. T) and magnetization (M (μ<sub>B</sub>) vs. H) plots are easily generated with,
+
+```
+plotSusceptibility(parseFile('DATAFILE.DAT'))
+```
+and
+```
+plotMagnetization(parseFile('DATAFILE.DAT'))
+```
