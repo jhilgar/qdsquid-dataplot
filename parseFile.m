@@ -51,9 +51,9 @@ end
 function header = parseHeader(contents, headerLine, dataLine)
 
     header = [];
-    for i=headerLine:dataLine
-        if strncmp(contents{1}{i}, 'INFO', 4) && not(length(strfind(contents{1}{i}, 'APPNAME')))
-            header = [header; regexp(contents{1}{i}, ',', 'split')];
+    for a = headerLine:dataLine
+        if strncmp(contents{1}{a}, 'INFO', 4) && not(length(strfind(contents{1}{a}, 'APPNAME')))
+            header = [header; regexp(contents{1}{a}, ',', 'split')];
         end
     end
     if strcmp(header{2,2}, '')
