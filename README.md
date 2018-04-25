@@ -21,7 +21,7 @@ See [this](https://www.mathworks.com/help/matlab/matlab_prog/variable-names.html
 * **Size**: Sample molar diamagnetism (put 0 if uncalculated)
 * **Shape**: Not used
 
-## Static magnetic properties
+### Static magnetic properties
 From a parsed file, susceptibility (χT (emu K mol<sup>-1</sup>) vs. T) and magnetization (M (μ<sub>B</sub>) vs. H) plots are easily generated with,
 ```
 plotSusceptibility(parseFile('DATAFILE.DAT'))
@@ -31,7 +31,7 @@ and
 plotMagnetization(parseFile('DATAFILE.DAT'))
 ```
 
-## Dynamic magnetic properties
+### Dynamic magnetic properties
 The ac magnetic susceptibilities are easily plotted with `plotACIn`, `plotACOut`, and `plotColeCole`. These data can be fit to a generalized Debye model using the `fitACFreq` function
 ```
 fitACFreq(parseFile('DATAFILE.DAT', numTemps))
