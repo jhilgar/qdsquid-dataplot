@@ -21,8 +21,8 @@ See [this](https://www.mathworks.com/help/matlab/matlab_prog/variable-names.html
 * **Size**: Sample molar diamagnetism (put 0 if uncalculated)
 * **Shape**: Not used
 
+## Static magnetic properties
 From a parsed file, susceptibility (χT (emu K mol<sup>-1</sup>) vs. T) and magnetization (M (μ<sub>B</sub>) vs. H) plots are easily generated with,
-
 ```
 plotSusceptibility(parseFile('DATAFILE.DAT'))
 ```
@@ -30,3 +30,10 @@ and
 ```
 plotMagnetization(parseFile('DATAFILE.DAT'))
 ```
+
+## Dynamic magnetic properties
+The ac magnetic susceptibilities are easily plotted with `plotACIn`, `plotACOut`, and `plotColeCole`. These data can be fit to a generalized Debye model using the `fitACFreq` function
+```
+fitACFreq(parseFile('DATAFILE.DAT', numTemps))
+```
+where the first argument is a standard structure array and `numTemps` is the number of (highest) temperatures to use for an Arrhenius fitting. The output of this function is a copy of the input structure array with additional fitting result data. Passing this larger structure array to the previous three functions will yield fit lines plotted on top of the data. The function `plotArrhenius` takes only fitted data as input.
