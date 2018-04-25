@@ -1,5 +1,5 @@
 function setDefaults()
-
+    
     set(groot,'defaultLineLineWidth',1.5);
     set(groot,'defaultAxesLineWidth',2);
     set(groot,'defaultLineMarkerSize',6);
