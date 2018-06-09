@@ -24,7 +24,6 @@ classdef AcData < DataSet
         end
         
         function plotInPhase(obj, varargin)
-            figure;
             hold on;
             for a = 1:length(obj.Temperatures)
                 rows = obj.Data.TemperatureRounded == obj.Temperatures(a);
@@ -38,7 +37,6 @@ classdef AcData < DataSet
         end
         
         function plotOutOfPhase(obj, varargin)
-            figure;
             hold on;
             for a = 1:length(obj.Temperatures)
                 rows = obj.Data.TemperatureRounded == obj.Temperatures(a);
