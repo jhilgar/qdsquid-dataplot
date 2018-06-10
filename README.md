@@ -21,7 +21,8 @@ susErCOT =
      RawData: [342×89 table]
         Data: [342×7 table]
         
->> susErCOT.plot
+>> susErCOT.plotSusceptibility
+>> susErCOT.writePhi('KErCOT2');
 ```
 
 The header of the datafile is parsed and used to perform conversions and corrections to the data. These fields can be set in the 'Sample Properties' window of MultiVu or manually using a text editor.
