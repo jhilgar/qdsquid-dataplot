@@ -33,7 +33,7 @@ classdef AcData < TauData
         function plotArrhenius(obj)
             % AcData.plotArrhenius
             %
-            % See PlotHelper.setArrheniusAxes()
+            % TODO
 
             PlotHelper.setDefaults();
             scatter(1 ./ obj.Fits.Temperature, log(obj.Fits.tau), [], PlotHelper.dataColor(obj.Fits.Temperature), 'filled');
@@ -42,6 +42,8 @@ classdef AcData < TauData
         
         function plotInPhase(obj)
             % AcData.plotInPhase
+            %
+            % TODO
             
             PlotHelper.setDefaults();
             for a = 1:length(obj.Fits.Temperature)
@@ -55,6 +57,8 @@ classdef AcData < TauData
         
         function plotOutOfPhase(obj)
             % AcData.plotOutOfPhase
+            %
+            % TODO
             
             PlotHelper.setDefaults();
             for a = 1:length(obj.Fits.Temperature)
@@ -68,6 +72,8 @@ classdef AcData < TauData
         
         function plotColeCole(obj)
             % AcData.plotColeCole
+            %
+            % TODO
             
             PlotHelper.setDefaults();
             for a = 1:length(obj.Fits.Temperature)
@@ -80,7 +86,8 @@ classdef AcData < TauData
         
         function setTempRange(obj, tempRange)
             % AcData.setTempRange(tempRange)
-            % INPUT     (1x2 vector) temperature range to include for fitting
+            % INPUT     (vecto
+            % TODO
             
             obj.parseTauData(tempRange);
             obj.fitTau();
