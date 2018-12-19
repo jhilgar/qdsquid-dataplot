@@ -9,7 +9,8 @@ classdef AcData < TauData
 %           plotInPhase             - Plots the in-phase susceptibility
 %           plotOutOfPhase          - Plots the out-of-phase susceptibility
 %           plotColeCole            - Outputs a Cole-Cole plot
-%           setTempRange(tempRange) - Sets the data selection range by temperature
+%           setTempRange(tempRange) - Sets the data selection range to (1x2
+%                                     vector) tempRange
 %
 %   PROPERTIES  Fits        - (table) Debye model fits of the input data over
 %                             TempRange
@@ -81,6 +82,8 @@ classdef AcData < TauData
         function setTempRange(obj, tempRange)
             % AcData.setTempRange(tempRange)
             % INPUT     (1x2 vector) temperature range to include for fitting
+            %
+            % EXAMPLE   obj.setTempRange([10 15.5])
             
             obj.parseTauData(tempRange);
             obj.fitTau();

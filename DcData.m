@@ -7,7 +7,8 @@ classdef DcData < TauData
 %
 %   METHODS plotArrhenius           - Outputs an Arrhenius plot of the tau data
 %           plotMoment              - Plots moment versus time
-%           setTempRange(tempRange) - Sets the data selection range by temperature
+%           setTempRange(tempRange) - Sets the data selection range to (1x2
+%                                     vector) tempRange
 %
 %   PROPERTIES  Fits        - (table) Debye model fits of the input data over
 %                             TempRange
@@ -58,6 +59,8 @@ classdef DcData < TauData
         function setTempRange(obj, tempRange)
             % DcData.setTempRange(tempRange)
             % INPUT     (1x2 vector) temperature range to include for fitting
+            %
+            % EXAMPLE   obj.setTempRange([10 15.5])
             
             obj.parseTauData(tempRange);
             obj.fitTau();
