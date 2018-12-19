@@ -37,6 +37,7 @@ Er_COT_I_THF2_sus =
 >> figure
 >> Er_COT_I_THF2_sus.plotChiT
 ```
+![chiT plot](examples/Er_COT_I_THF2_sus.png)
 
 ## ac susceptibility plotting and fitting example
 ```
