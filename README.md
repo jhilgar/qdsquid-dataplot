@@ -79,9 +79,19 @@ Er_COT_I_THF2_rel =
 
        5         11.1      95.521    0.66667    9.2696e-10    1.0596e-08    0.0022658    0.17213    NaN    NaN    NaN    NaN
 
->> Er_COT_I_THF2_rel.plotRelaxation
+>> Er_COT_I_THF2_rel.qtm = NaN
+>> Er_COT_I_THF2_rel.setTempRange([10.5 11.1]);
+>> Er_COT_I_THF2_rel.fitRelaxation
+    LowTemp    HighTemp     Ueff     UeffCi       tau_0        tua_0Ci         qtm        qtmCi      C     CCi     n     nCi
+    _______    ________    ______    _______    __________    __________    _________    _______    ___    ___    ___    ___
+
+        5        11.1      95.521    0.66667    9.2696e-10    1.0596e-08    0.0022658    0.17213    NaN    NaN    NaN    NaN
+     10.5        11.1      83.254     1.0761    4.1693e-09    2.9096e-08          NaN        NaN    NaN    NaN    NaN    NaN
+
+>> Er_COT_I_THF2_rel.plotRelaxation(1)
+>> Er_COT_I_THF2_rel.plotRelaxation(2)
 >> PlotHelper.setArrheniusAxes
 >> xlim(1 ./ [16 4])
->> ylim(log([1e-4 1e-1]))
+>> ylim(log([1e-4 1e-2]))
 ```
 ![arrhenius plot with relaxation](examples/ErCOTITHF2_ac_rel.png)
