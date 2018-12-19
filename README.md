@@ -22,20 +22,20 @@ See [this](https://www.mathworks.com/help/matlab/matlab_prog/variable-names.html
 
 ## Static susceptibility plotting example
 ```
->> susErCOT = SusData('180607_KErCOT2_MvsT.dat')
+>> Er_COT_I_THF2_sus = SusData('04-02-17 - ErI(COT)(THF)2 - MvsT.dat')
 
-susErCOT = 
+Er_COT_I_THF2_sus = 
 
   SusData with properties:
 
-      Fields: 999.6509
-    Filename: '180607_KErCOT2_MvsT.dat'
+      Fields: 999.9932
+    Filename: '04-02-17 - ErI(COT)(THF)2 - MvsT.dat'
       Header: [1×9 table]
-         Raw: [342×89 table]
-      Parsed: [342×7 table]
-        
->> figure();
->> susErCOT.plotChiT();
+         Raw: [565×89 table]
+      Parsed: [565×6 table]
+
+>> figure
+>> Er_COT_I_THF2_sus.plotChiT
 ```
 
 ## ac susceptibility plotting and fitting example
@@ -53,9 +53,10 @@ Er_COT_I_THF2_ac =
           Raw: [540×89 table]
        Parsed: [540×10 table]
 
+>> figure
 >> Er_COT_I_THF2_ac.plotArrhenius
 ```
-![arrhenius plot](examples/ErCOTITHF2_ac.png)
+![arrhenius plot](examples/Er_COT_I_THF2_ac.png)
 ```
 >> Er_COT_I_THF2_rel = Relaxation(Er_COT_I_THF2_ac)
 
@@ -94,4 +95,4 @@ Er_COT_I_THF2_rel =
 >> xlim(1 ./ [16 4])
 >> ylim(log([1e-4 1e-2]))
 ```
-![arrhenius plot with relaxation](examples/ErCOTITHF2_ac_rel.png)
+![arrhenius plot with relaxation](examples/Er_COT_I_THF2_ac_rel.png)
