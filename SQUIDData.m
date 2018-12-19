@@ -1,38 +1,32 @@
-classdef DataSet < handle
-    
+classdef SQUIDData < handle
+% SQUIDData     A collection of Matlab functions that parse and plot data 
+%               from a Quantum Design MPMS 3 SQUID magnetometer
+%   
+%   This package currently consists of six user classes whose names are: 
+%   AcData, DcData, MagData, PlotHelper, Relaxation, and SusData
+%   
+%   Type `help ClassName` to get specific usage instructions for a given class 
+%
+%   Type `help ClassName.methodName` to get specific usage instructions for 
+%   a given class method
+
     properties
-        Filename    = [];
-        Header      = [];
-        RawData     = [];
-        Data        = [];
+        Filename    = []; % (string) filename
+        Header      = []; % (table) header information
+        Raw         = []; % (table) raw data
+        Parsed      = []; % (table) parsed data
     end
     
-    methods
-        function obj = DataSet(filename)
+    methods (Access = protected)
+        function obj = SQUIDData(filename)
             obj.Filename = filename;
             fileID = fopen(obj.Filename, 'r');
             obj.parseFile(textscan(fileID, '%s', 50, 'Delimiter', '\n'))
             fclose(fileID);
-            obj.setDefaults();
-        end
+        end 
     end
     
     methods (Access = private)
-        function setDefaults(obj)
-            set(groot,'defaultLineLineWidth',1);
-            set(groot,'defaultAxesLineWidth',1.5);
-            set(groot,'defaultLineMarkerSize',6);
-            set(groot,'defaultScatterSizeData',10);
-            set(groot,'defaultScatterLineWidth',1.5);
-            set(groot,'defaultAxesFontWeight','bold');
-            set(groot,'defaultAxesFontSize',15);
-            set(groot,'defaultScatterSizeData',15);
-            set(groot,'defaultAxesBox','on');
-            set(groot,'defaultAxesTickLength', [0.0175 0.01]);
-            set(groot,'defaultFigurePaperPosition', [0 0 8 8]);
-            set(groot,'defaultScatterSizeData',15);
-        end
-        
         function parseFile(obj, contents)
             for a = 1:length(contents{1})
                 if strcmp('[Data]', contents{1}{a})
@@ -69,12 +63,10 @@ classdef DataSet < handle
         end
         
         function parseData(obj, dataLine)
-           obj.RawData = readtable(obj.Filename, 'HeaderLines', dataLine, 'CommentStyle', {'(', ')'});
-           
-           obj.Data                     = table(obj.RawData.Temperature_K_, 'VariableNames', {'Temperature'});
-           obj.Data.TemperatureRounded  = round(obj.Data.Temperature,1);
-           obj.Data.Field               = obj.RawData.MagneticField_Oe_;
+            warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames')
+            obj.Raw = readtable(obj.Filename, 'HeaderLines', dataLine, 'CommentStyle', {'(', ')'});
+            toDelete = obj.Raw.Temperature_K_ < 1.7;
+            obj.Raw(toDelete, :) = [];
         end
     end
-    
 end

@@ -1,31 +1,14 @@
 # qdsquid-dataplot
-A collection of Matlab functions that parse and plot data from a Quantum Design MPMS 3 SQUID magnetometer.
+A collection of MATLAB functions that parse and plot data from a Quantum Design MPMS 3 SQUID magnetometer.
 
 ## Setup
-The folder containing these scripts should be added to your Matlab path. This can be done by clicking the **Set Path** button under the **Home** tab.
+The folder containing these scripts should be added to your MATLAB path. This can be done by clicking the **Set Path** button under the **Home** tab.
 
 ## Usage
-Datafiles are parsed into objects whose constructor arguments are filenames. Currently there are three object types: `SusceptibilityData`, `MagnetizationData` and `AcData`. The object properties contain raw and parsed data and the object methods perform routine operations (plotting, exporting, etc.).
+Datafiles (.dat) are parsed by classes whose only constructor arguments are filenames. Currently there are four data class types: `AcData`, `DcData`, `SusData`, and `MagData`. The corresponding object properties contain raw, parsed, and fitted data and the object methods perform routine operations on these data (plotting, exporting, etc.). Two additional classes are `Relaxation`, which is responsible for fitting relaxation processes, and `PlotHelper` which provides some static methods for plotting convenience. Type `help SQUIDData` at the MATLAB command prompt for detailed usage information.
 
-```
->> susErCOT = SusceptibilityData('180607_KErCOT2_MvsT.dat')
-Warning: Variable names were modified to make them valid MATLAB identifiers. The original names are saved in the VariableDescriptions property. 
-
-susErCOT = 
-
-  SusceptibilityData with properties:
-
-      Fields: 999.6509
-    Filename: '180607_KErCOT2_MvsT.dat'
-      Header: [1×9 table]
-     RawData: [342×89 table]
-        Data: [342×7 table]
-        
->> susErCOT.plotSusceptibility
->> susErCOT.writePhi('KErCOT2');
-```
-
-The header of the datafile is parsed and used to perform conversions and corrections to the data. These fields can be set in the 'Sample Properties' window of MultiVu or manually using a text editor.
+## Input files
+Datafile headers are parsed and used to perform conversions and corrections to the data. These fields can be set in the 'Sample Properties' window of MultiVu or manually using a text editor. They should be set **before** using this code.
 
 * **Material**: Should be a Matlab-safe variable name. (Good: `Fe_OAc2`) (Bad: `180420-!-BestSMM`) 
 See [this](https://www.mathworks.com/help/matlab/matlab_prog/variable-names.html) for more details.
@@ -36,3 +19,22 @@ See [this](https://www.mathworks.com/help/matlab/matlab_prog/variable-names.html
 * **Molecular Weight**: Sample molecular weight in g mol<sup>-1</sup>
 * **Size**: Sample molar diamagnetism (put 0 if uncalculated)
 * **Shape**: Not used
+
+## Example
+```
+>> susErCOT = SusData('180607_KErCOT2_MvsT.dat')
+
+susErCOT = 
+
+  SusData with properties:
+
+      Fields: 999.6509
+    Filename: '180607_KErCOT2_MvsT.dat'
+      Header: [1×9 table]
+         Raw: [342×89 table]
+      Parsed: [342×7 table]
+        
+>> figure();
+>> susErCOT.plotChiT();
+```
+
