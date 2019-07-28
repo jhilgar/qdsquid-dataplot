@@ -42,6 +42,7 @@ Data tables are exported to .xlsx files using `objectName.writeData()`. Sheet 1 
 The current release of this code package does little in the way of error handling (e.g. class/data mismatch). Therefore, the occassional file parsing error or user oversight will most likely be met with a potentially unhelpful MATLAB error message.
 
 ## Example usage
+Example files can be found in the _examples_ directory
 ### (1) AC susceptibility
 **_Data import:_**
 ```
