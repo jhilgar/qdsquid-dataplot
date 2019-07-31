@@ -11,7 +11,7 @@ function fitTau(obj)
         y = nlparci(obj.x0, resid, 'Jacobian', J);
         toAdd = array2table([temps(a), obj.x0], 'VariableNames', obj.FitFields);
         obj.Fits = [obj.Fits; toAdd];
-        frequencies = linspace(min(obj.Parsed.Frequency(rows)), max(obj.Parsed.Frequency(rows)), 100);
+        frequencies = logspace(log10(min(obj.Parsed.Frequency(rows))), log10(max(obj.Parsed.Frequency(rows))), 100);
         model = obj.generalizedDebyeModel(obj.x0, frequencies);
         toAdd = array2table([temps(a)*ones(size(model, 1), 1) frequencies' model], 'VariableNames', obj.ModelFields); 
         obj.Model = [obj.Model; toAdd];

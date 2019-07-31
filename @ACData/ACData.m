@@ -14,6 +14,13 @@ classdef ACData < DebyeData
 
             obj.fitTau();
         end
+        
+        function plotOutOfPhase(obj)
+            PlotHelper.scatterDataset(obj.Parsed.Frequency, obj.Parsed.ChiOut, obj.Parsed.TemperatureRounded);
+            PlotHelper.plotDataset(obj.Model.FrequencyModel, obj.Model.ChiOutModel, obj.Model.TemperatureRounded)
+            set(gca, 'XScale', 'log');
+            axis square;
+        end
     end
 
     methods (Access = private)
