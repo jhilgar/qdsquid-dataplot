@@ -3,7 +3,7 @@ function plot(obj, plot_type, varargin)
     p.addParameter('Spacing', 1);
     p.parse(varargin{:});
 
-    model_group = obj.Model.Temperature;
+    model_group = obj.Model.TemperatureRounded;
     data_group = obj.Parsed.TemperatureRounded;
     switch plot_type
         case 'in'

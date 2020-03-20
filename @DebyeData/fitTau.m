@@ -46,9 +46,9 @@ function fitTau(obj, varargin)
     hn_vars = cellfun(@(x, y) [x num2str(y)], repmat(hn_vars, 1, obj.nHN), num2cell(ceil((1:4*obj.nHN)/4)), 'UniformOutput', false);
     hn_error_vars = {'hn_tau_ci_neg_', 'hn_tau_ci_pos_', 'hn_alpha_ci_neg_', 'hn_alpha_ci_pos_', 'hn_beta_ci_neg_', 'hn_beta_ci_pos_', 'hn_chi_t_ci_neg_', 'hn_chi_t_ci_pos_'};
     hn_error_vars = cellfun(@(x, y) [x num2str(y)], repmat(hn_error_vars, 1, obj.nHN), num2cell(ceil((1:8*obj.nHN)/8)), 'UniformOutput', false);
-    fit_vars = {'Temperature', cc_vars, hn_vars, 'chi_s'};
-    error_vars = {'Temperature', cc_error_vars, hn_error_vars, 'chi_s_ci_neg', 'chi_s_ci_pos'};
-    model_vars = {'Temperature', 'Frequency', 'ChiIn', 'ChiOut'};
+    fit_vars = {'TemperatureRounded', cc_vars, hn_vars, 'chi_s'};
+    error_vars = {'TemperatureRounded', cc_error_vars, hn_error_vars, 'chi_s_ci_neg', 'chi_s_ci_pos'};
+    model_vars = {'TemperatureRounded', 'Frequency', 'ChiIn', 'ChiOut'};
 
     for a = 1:length(temps)
         disp(['Fitting ' num2str(temps(a)) 'K data.']);
