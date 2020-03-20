@@ -1,5 +1,5 @@
 function fitTau(obj, fitType)
-    obj.FitType = []; obj.Fits = []; obj.Errors = [];
+    obj.FitType = []; obj.Fits = []; obj.Errors = []; obj.Model = [];
     switch fitType
         case 'bi'
             fitIdx = 1;

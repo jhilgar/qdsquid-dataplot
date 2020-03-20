@@ -1,9 +1,8 @@
 classdef TauData < SQUIDData
     properties
-        FitType;
-        Fits;
-        Errors;
-        Model;
+        Fits = cell2table(cell(0, 2), 'VariableNames', {'Temperature', 'tau'});
+        Errors = table;
+        Model = cell2table(cell(0, 4), 'VariableNames', {'Temperature', 'Frequency', 'ChiIn', 'ChiOut'});
     end
     
     methods (Abstract)
@@ -11,10 +10,13 @@ classdef TauData < SQUIDData
     end
     
     methods
+        plot(obj, plot_type, varargin);
+
         function obj = TauData(varargin) 
             obj = obj@SQUIDData(varargin{:});
         end
         
+
         function writeData(obj)
             warning('off', 'MATLAB:xlswrite:AddSheet');
             writetable(obj.Parsed, [inputname(1) '.xlsx'], 'Sheet', 1);
@@ -24,9 +26,5 @@ classdef TauData < SQUIDData
             
             disp(['Wrote data to ' inputname(1) '.xlsx']);
         end
-    end
-
-    methods (Access = protected)
-        idxs = findDataBlocks(obj, data, time)
     end
 end

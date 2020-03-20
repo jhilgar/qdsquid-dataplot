@@ -1,10 +1,10 @@
 classdef SQUIDDataFile < handle & matlab.mixin.CustomDisplay
     properties
-        Filename    = []; % (string) filename
+        Filename        = []; % (string) filename
         MeasurementType = []; % (string) AC, DC, VSM, and RSO are recognized
-        SQUIDType   = []; % (string) MPMS3 and MPMSXL are recognized
-        Header      = []; % (table) header information
-        Raw         = []; % (table) raw data
+        SQUIDType       = []; % (string) MPMS3 and MPMSXL are recognized
+        Header          = []; % (table) header information
+        Raw             = []; % (table) raw data
     end
     
     properties (Hidden = true, Constant)
@@ -62,10 +62,10 @@ classdef SQUIDDataFile < handle & matlab.mixin.CustomDisplay
     end
     
     methods (Access = private)
-        idx = determineMeasurementType(obj, contents)
-        idx = determineSQUIDType(obj, contents)
+        idx = determineMeasurementType(obj, contents);
+        idx = determineSQUIDType(obj, contents);
 
-        parseFile(obj, contents)
-        parseHeader(obj, contents, dataLine)
+        parseFile(obj, contents);
+        parseHeader(obj, contents, dataLine);
     end
 end

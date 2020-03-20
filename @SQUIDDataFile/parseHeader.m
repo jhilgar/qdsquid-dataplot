@@ -14,11 +14,9 @@ function parseHeader(obj, contents, dataLine)
     end
 
     obj.Header = cell2table(header{1, obj.HeaderFields{obj.SQUIDTypeIdx}}, 'VariableNames', obj.HeaderFields{end});
-
     missingFields = ismissing(obj.Header);
     zeroFields = str2double(obj.Header{1, :}) == 0;
     badFields = missingFields | zeroFields;
-    badFields = badFields & logical([1 1 1 0 1 0]);
 
     if any(badFields)
         disp([obj.Filename ' missing header information (replacing with default values):'] );

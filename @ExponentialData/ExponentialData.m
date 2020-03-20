@@ -1,4 +1,10 @@
 classdef ExponentialData < TauData
+    properties
+        FitType = 'none';
+        nE = [];
+        nSE = [];
+    end
+
     properties (Access = protected)
         x0Stretched = [100, 0.5, 10];
         lbStretched = [1, 0, 0];
@@ -31,7 +37,8 @@ classdef ExponentialData < TauData
     end
 
     methods
-        fitTau(obj, fitType)
+        fitTau(obj, fitType);
+        fitTau2(obj, varargin);
 
         function obj = ExponentialData(varargin)
             obj = obj@TauData(varargin{:});
@@ -44,8 +51,6 @@ classdef ExponentialData < TauData
             for a = 1:length(obj.DataFiles)
                 obj.parseExponentialData(obj.DataFiles(a));
             end
-            
-            obj.fitTau('stretched');
         end
     end
 
@@ -53,13 +58,27 @@ classdef ExponentialData < TauData
         parseExponentialData(obj, exponentialData)
     end
 
-    methods (Access = private, Static)
-        function model = BiExponentialFunction(b, x, M0)
-            model = b(4) + (M0 - b(4)).*(b(3).*exp(-x./b(1)) + (1 - b(3)).*exp(-x./b(2)));
+    methods (Static)
+        function output = model(xdata, e, se, b, m0)
+            ycalc = 0;
+
+            for a = 1:e
+                ycalc = ycalc + ExponentialData.Exponential([b(((a - 1) * 2 + 1):((a - 1) * 2 + 2)), b(end)], xdata, m0);
+            end
+
+            for a = 1:se
+                ycalc = ycalc + ExponentialData.StretchedExponential([b(((a - 1) * 3 + 1 + (e * 2)):((a - 1) * 3 + 3 + (e * 2))), b(end)], xdata, m0);
+            end
+
+            output = ycalc + b(end);
         end
 
-        function model = StretchedExponentialFunction(b, x, M0)
-        	model = b(3) + (M0 - b(3)).*exp(-(x./b(1)).^b(2));
+        function output = Exponential(b, time, m0)
+            output = (m0 * b(2)).*exp(-time ./ b(1));
+        end
+
+        function output = StretchedExponential(b, time, m0)
+            output = (m0 * b(3)).*exp(-(time ./ b(1)).^b(2));
         end
     end
 end
