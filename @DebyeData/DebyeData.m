@@ -1,19 +1,6 @@
 classdef DebyeData < TauData
-    properties (Access = protected)
-        FitOpts = optimoptions('lsqcurvefit', 'Algorithm', 'trust-region-reflective', 'Display', 'off');
-        x0 = [0.37819, 0.057845, 0.12786, 0.00097048]; % [Xt, Xs, alpha, tau]
-        lb = [0, 0, 0, 0];
-        ub = [100, 100, 1, 10000];    
-    end
-    
-    properties (Access = protected, Constant)
-        ErrorFields = {'TemperatureRounded', 'XtCiNeg', 'XtCiPos', 'XsCiNeg', 'XsCiPos', 'alphaCiNeg', 'alphaCiPos', 'tauCiNeg', 'tauCiPos'};
-        FitFields = {'TemperatureRounded', 'Xt', 'Xs', 'alpha', 'tau'};
-        ModelFields = {'TemperatureRounded', 'FrequencyModel', 'ChiInModel', 'ChiOutModel'};
-    end
-    
     methods
-        fitTau(obj)
+        fitTau(obj, varargin);
         
         function obj = DebyeData(varargin)
             obj = obj@TauData(varargin{:});

@@ -1,12 +1,17 @@
 classdef PlotHelper
     properties (Hidden = true, Constant)
         colorAlpha = 0.8;
+        
+        defaultAxesBox = 'on';
+        defaultLineLineWidth = 1.0;
+        defaultAxesLineWidth = 1.5;
+        defaultAxesFontWeight = 'bold';
     end
     
     methods (Static)
         function plotDataset(x, y, group, plotType, colorSpacing, marker, varargin)
             if isempty(x) || isempty(y), return; end
-            %PlotHelper.setDefaults();
+            PlotHelper.setDefaults();
             p = inputParser;
             p.addParameter('Axes', gca);
             p.parse(varargin{:});
