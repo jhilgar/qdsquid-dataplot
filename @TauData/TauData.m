@@ -1,8 +1,8 @@
 classdef TauData < SQUIDData
     properties
-        Fits = cell2table(cell(0, 2), 'VariableNames', {'TemperatureRounded', 'tau'});
+        Fits   = table;
         Errors = table;
-        Model = cell2table(cell(0, 4), 'VariableNames', {'TemperatureRounded', 'Frequency', 'ChiIn', 'ChiOut'});
+        Model  = cell2table(cell(0, 4), 'VariableNames', {'TemperatureRounded', 'Frequency', 'ChiIn', 'ChiOut'});
     end
     
     methods (Abstract)
@@ -16,15 +16,13 @@ classdef TauData < SQUIDData
             obj = obj@SQUIDData(varargin{:});
         end
         
-
-        function writeData(obj)
-            warning('off', 'MATLAB:xlswrite:AddSheet');
-            writetable(obj.Parsed, [inputname(1) '.xlsx'], 'Sheet', 1);
-            writetable(obj.Fits, [inputname(1) '.xlsx'], 'Sheet', 2);
-            writetable(obj.Errors, [inputname(1) '.xlsx'], 'Sheet', 3);
-            writetable(obj.Model, [inputname(1) '.xlsx'], 'Sheet', 4);
+        function writeData(obj, filename)
+            obj.writeData@SQUIDData(filename);
+            writetable(obj.Fits, [filename '.xlsx'], 'Sheet', 2);
+            writetable(obj.Errors, [filename '.xlsx'], 'Sheet', 3);
+            writetable(obj.Model, [filename '.xlsx'], 'Sheet', 4);
             
-            disp(['Wrote data to ' inputname(1) '.xlsx']);
+            disp(['Wrote data to ' filename '.xlsx']);
         end
     end
 end

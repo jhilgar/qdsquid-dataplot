@@ -16,6 +16,11 @@ classdef SQUIDData < handle
                obj.DataFiles = [obj.DataFiles; SQUIDDataFile(varargin{a})]; 
             end
         end
+        
+        function writeData(obj, filename)
+            warning('off', 'MATLAB:xlswrite:AddSheet');
+            writetable(obj.Parsed, [filename '.xlsx'], 'Sheet', 1); 
+        end
     end
     
     methods (Static)

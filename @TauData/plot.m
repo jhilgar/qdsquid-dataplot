@@ -5,15 +5,12 @@ function plot(obj, plot_type, varargin)
 
     switch plot_type
         case 'arrhenius'
-            xdata = 1./obj.Fits.Temperature;
+            xdata = 1./obj.Fits.TemperatureRounded;
             columns = obj.Fits(:, contains(obj.Fits.Properties.VariableNames, 'tau'));
             ydata = log(reshape(table2array(columns), [height(obj.Fits)*width(columns), 1]));
             xdata = repmat(xdata, width(columns), 1);
             xscale = 'linear';
-            xmodel = [];
-            ymodel = [];
-            model_group = [];
-            data_group = repmat(obj.Fits.Temperature, 1, width(columns));
+            data_group = repmat(obj.Fits.TemperatureRounded, 1, width(columns));
             labels = {'1/T', 'ln(\tau)'};
         otherwise
             disp('Unrecognized plot type.');
