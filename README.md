@@ -5,7 +5,7 @@ A collection of MATLAB functions that parse and fit data from a Quantum Design M
 The folder containing these scripts should be added to your MATLAB path. This can be done by clicking the **Set Path** button under the **Home** tab. See [this](https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html) for more details.
 
 ## Usage
-Datafiles (.dat) are parsed by classes whose constructor arguments are filenames or lists of filenames. Constructors called without arguments parse all .dat files in the current directory. Classes that typical users will instantiate are: `ACData`, `ExponentialData`, `MagnetizationData`, `SusceptibilityData`, and `WaveformData`. The corresponding object properties contain raw, parsed, and potentially fitted data and the object methods perform routine operations on these data (currently: fitting, exporting). Each class instance of `ACData`, `ExponentialData`, and `WaveformData` corresponds to one model fit of the supplied dataset(s). SQUID versions and measurement modes are automatically detected and currently supported types are:
+Datafiles (.dat) are parsed by classes whose constructor arguments are filenames or lists of filenames. Constructors called without arguments parse all .dat files in the current directory. Classes that typical users will instantiate are: `ACData`, `MagnetizationData`, `SusceptibilityData`, and `WaveformData`. The corresponding object properties contain raw, parsed, and potentially fitted data and the object methods perform routine operations on these data (currently: fitting, exporting). Each class instance of `ACData` and `WaveformData` corresponds to one model fit of the supplied dataset(s). SQUID versions and measurement modes are automatically detected and currently supported types are:
 (MPMS 3) AC, DC, and VSM
 (MPMS XL) AC, DC, and RSO.
 
@@ -28,9 +28,6 @@ Datafile headers are parsed and used to perform conversions and corrections to t
 ## &tau; model classes
 #### `ACData`
 Parses and fits standard AC susceptibility data to a generalized Debye model.
-
-#### `ExponentialData`
-Parses and fits DC, RSO, or VSM moment data to either a stretched exponential `objectName.fitTau('stretched')` or bi-exponential `objectName.fitTau('bi')` model.
 
 #### `WaveformData`
 Performs the Fourier transform on DC, RSO, or VSM moment data and fits the resulting susceptibilities to a generalized Debye model. Details about this method can be found in: https://arxiv.org/abs/1907.05962
@@ -120,57 +117,4 @@ ans =
             2             0.00051861    5.1768    0.83523     0.15996
             2              0.0010334    4.6218     1.3189     0.27797
             2              0.0020498    3.7456      1.612      0.4064
-```
-### (3) DC relaxation/exponential decay
-**_Data import:_**
-```
->> Er_hdcCOT2_DC = ExponentialData('190412 - K(18-c-6)_Er(BAT)2 - 1 - 3 - DC Relaxation.dat')
-Fitting ExponentialData with StretchedExponential fit type.
-
-Er_hdcCOT2_DC =
-
-  ExponentialData with properties:
-
-      FitType: 'StretchedExponential'
-         Fits: [5×4 table]
-       Errors: [5×7 table]
-        Model: [1961×3 table]
-    DataFiles: [1×1 SQUIDDataFile]
-       Parsed: [1961×3 table]
-```
-**_View stretched exponential fit results:_**
-```
->> Er_hdcCOT2_DC.Fits
-
-ans =
-
-  5×4 table
-
-    TemperatureRounded     tau       beta          Mf
-    __________________    ______    _______    __________
-
-             2            145.04    0.50506         329.9
-             4            118.91    0.58089        245.13
-             6            106.24    0.62371        19.952
-             8            80.409    0.74846    8.0757e-07
-            10             35.59     0.9136    3.6285e-14
-```
-**_Refit data with a bi-exponential and view fit results:_**
-```
->> Er_hdcCOT2_DC.fitTau('bi')
-Fitting ExponentialData with BiExponential fit type.
->> Er_hdcCOT2_DC.Fits
-
-ans =
-
-  5×5 table
-
-    TemperatureRounded     tau1      tau2       A12          Mf
-    __________________    ______    ______    _______    __________
-
-             2            86.958    1093.3     0.7779        290.43
-             4            69.324    621.45    0.74739        185.69
-             6            61.179     429.7    0.72352    1.3177e-06
-             8             50.84    217.39    0.70052    4.5847e-14
-            10             28.68    71.397    0.77233    3.3621e-14
 ```
