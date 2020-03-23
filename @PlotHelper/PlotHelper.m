@@ -1,6 +1,6 @@
 classdef PlotHelper
     properties (Hidden = true, Constant)
-        colorAlpha = 0.8;
+        colorAlpha = 0.7;
         
         defaultAxesBox = 'on';
         defaultLineLineWidth = 1.0;
@@ -16,7 +16,7 @@ classdef PlotHelper
             p.addParameter('Axes', gca);
             p.parse(varargin{:});
             groups = unique(group);
-            toggle = double(~mod(colorSpacing+(0:length(groups)-1), colorSpacing));
+            toggle = ~double(~mod(colorSpacing+(0:length(groups)-1), colorSpacing));
 
             for a = 1:length(groups)
                 rows = group == groups(a);
@@ -75,7 +75,6 @@ classdef PlotHelper
             linkaxes([ax1, ax2]);
             linkprop([ax1, ax2], {'Position', 'PlotBoxAspectRatio'});
             uistack(gca, 'bottom');
-
             yticks(log(10.^(-5:4)));
             yticklabels({'10^{-5}', '10^{-4}', '10^{-3}', '10^{-2}', '10^{-1}', '1', '10', '10^{2}', '10^{3}', '10^{4}'});
             xlim(1 ./ [50 1.9]);

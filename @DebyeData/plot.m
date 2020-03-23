@@ -41,8 +41,8 @@ function plot(obj, plot_type, varargin)
             marker = '*';
     end
 
-    PlotHelper.plotDataset(xdata, ydata, data_group, 'scatter', p.Results.Spacing, marker, varargin{:});
-    PlotHelper.plotDataset(xmodel, ymodel, model_group, 'line', p.Results.Spacing, marker, varargin{:});
+    PlotHelper.plotDataset(xdata, ydata, data_group, 'scatter', p.Results.Spacing, marker, p.Unmatched);
+    PlotHelper.plotDataset(xmodel, ymodel, model_group, 'line', p.Results.Spacing, marker, p.Unmatched);
     
     set(gca, 'XScale', xscale);
     xlabel(labels{1}); ylabel(labels{2});
