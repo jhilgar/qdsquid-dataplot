@@ -2,7 +2,6 @@ classdef MagnetizationData < SQUIDData
     methods
         function obj = MagnetizationData(varargin)
             obj = obj@SQUIDData(varargin{:});
-            obj.Parsed = [];
             obj.parseMagnetizationData();
         end
 

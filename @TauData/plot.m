@@ -13,7 +13,7 @@ function plot(obj, plot_type, varargin)
             data_group = repmat(obj.Fits.TemperatureRounded, 1, width(columns));
             labels = {'1/T', 'ln(\tau)'};
         otherwise
-            disp('Unrecognized plot type.');
+            disp('Unrecognized plot type, supported: in, out, cole, arrhenius');
             return;
     end
 
