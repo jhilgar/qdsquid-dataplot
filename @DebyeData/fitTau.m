@@ -13,13 +13,13 @@ function fitTau(obj, varargin)
 
     ccx0 = [1/(2*pi*((max(obj.Parsed.Frequency) + min(obj.Parsed.Frequency))/2)), 0.2, 1];
     cclb = [1/(1.1*2*pi*max(obj.Parsed.Frequency)), 0, 0.5];
-    ccub = [1/(0.9*2*pi*min(obj.Parsed.Frequency)), 0.5, 26];
+    ccub = [1/(0.9*2*pi*min(obj.Parsed.Frequency)), 0.5, 15];
 
     hnx0 = [1/(2*pi*((max(obj.Parsed.Frequency) + min(obj.Parsed.Frequency))/2)), 0.9, 1, 5];
     hnlb = [1/(2*pi*max(obj.Parsed.Frequency)*1.05), 0.01, 0.01, 1E-1];
     hnub = [1/(2*pi*min(obj.Parsed.Frequency)*0.95), 1, 1, 15];
 
-    chiInfx0 = [min(obj.Parsed.ChiIn)];
+    chiInfx0 = [0];
     chiInflb = [0.01];
     chiInfub = [max(obj.Parsed.ChiOut)];
 
@@ -28,8 +28,8 @@ function fitTau(obj, varargin)
     ub = [repmat(ccub, 1, obj.nCC), repmat(hnub, 1, obj.nHN), chiInfub];
 
     opts = optimoptions(@fmincon, 'Algorithm', 'interior-point', ...
-                                  'FunctionTolerance', 1e-19, 'OptimalityTolerance', 1e-19, 'StepTolerance', 1e-19, ...
-                                  'ObjectiveLimit', 1e-19, 'Display', 'off', 'ConstraintTolerance', 1E-19);
+                                  'FunctionTolerance', 1e-23, 'OptimalityTolerance', 1e-23, 'StepTolerance', 1e-23, ...
+                                  'ObjectiveLimit', 1e-23, 'Display', 'off', 'ConstraintTolerance', 1E-23);
     opts2 = optimoptions('lsqcurvefit', 'Algorithm', 'Levenberg-Marquardt', ...
                                   'FunctionTolerance', 1e-10, 'OptimalityTolerance', 1e-10, 'StepTolerance', 1e-10, ...
                                   'Display', 'off');

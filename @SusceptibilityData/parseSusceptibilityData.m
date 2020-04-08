@@ -12,7 +12,7 @@ function parseSusceptibilityData(obj)
         toAdd.ChiErr = toAdd.MomentMolesErr ./ toAdd.Field;
         toAdd.ChiT = toAdd.Chi .* toAdd.Temperature;
         toAdd.ChiTErr = toAdd.ChiErr .* toAdd.Temperature;
-        
+                            
         idxs = obj.findDataBlocks(obj.DataFiles(a), 500);
         data_blocks = arrayfun(@(a) a .* ones(idxs(a + 1) - idxs(a), 1), 1:(length(idxs) - 1), 'UniformOutput', false);
         data_blocks = vertcat(data_blocks{:}, length(idxs) - 1);
