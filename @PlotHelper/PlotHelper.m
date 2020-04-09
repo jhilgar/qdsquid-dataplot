@@ -1,7 +1,7 @@
 classdef PlotHelper
     properties (Hidden = true, Constant)
         colorAlpha = 0.5;
-        hotTemp = 20;
+        hotTemp = 17;
         
         defaultAxesBox = 'on';
         defaultLineLineWidth = 1.5;
@@ -18,26 +18,38 @@ classdef PlotHelper
             p.parse(varargin{:});
             groups = unique(group);
             toggle = double(~mod(colorSpacing+(0:length(groups)-1), colorSpacing));
-
+            
+            scatter_data = [];
+            line_data = [];
+            
             for a = 1:length(groups)
                 rows = group == groups(a);
+                handleVis = 'off';
                 switch plotType
                     case 'scatter'
-                        scatter(p.Results.Axes, x(rows), y(rows), [], PlotHelper.colorSelector(groups(a), toggle(a)), 'filled', marker, 'MarkerFaceAlpha', 1 - (PlotHelper.colorAlpha*(~toggle(a))));
+                        if toggle(a), handleVis = 'on'; end
+                        newScatter = scatter(p.Results.Axes, x(rows), y(rows), [], PlotHelper.colorSelector(groups(a), toggle(a)), 'filled', marker, 'MarkerFaceAlpha', 1 - (PlotHelper.colorAlpha*(~toggle(a))), 'DisplayName', [num2str(groups(a)) ' K'], 'HandleVisibility', handleVis);
+                        if ~toggle(a)
+                            uistack(newScatter, 'bottom')
+                        else
+                            scatter_data = [scatter_data; newScatter];
+                        end
                     case 'line'
-                        currentPlot = plot(p.Results.Axes, x(rows), y(rows), 'Color', PlotHelper.colorSelector(groups(a), toggle(a)));
-                        currentPlot.Color(4) = 1 - (PlotHelper.colorAlpha*(~toggle(a)));
+                        newLine = plot(p.Results.Axes, x(rows), y(rows), 'Color', PlotHelper.colorSelector(groups(a), toggle(a)), 'HandleVisibility', handleVis);
+                        newLine.Color(4) = 1 - (PlotHelper.colorAlpha*(~toggle(a)));
+                        uistack(newLine, 'bottom');
+                        line_data = [line_data; newLine];
                 end
+                legend(scatter_data); legend('off'); legend('show');
             end
         end
 
         function color = colorSelector(temperature, a)
-            cmap = jet(500);
-            
             %color = hsv2rgb([1-tanh(temperature/30)' double(mod(a + 3, 3)) ones(length(temperature), 1)*0.9]);
-            temperature = floor(rescale(temperature, 0, 500, 'InputMin', 1.8, 'InputMax', PlotHelper.hotTemp));
+            cmap = jet(100);
+            temperature = floor(rescale(temperature, 1, 100, 'InputMin', 1.8, 'InputMax', PlotHelper.hotTemp));
             temperature = rgb2hsv(cmap(temperature, :));
-            color = hsv2rgb([temperature(:, 1) double(mod(a + 3, 3)) temperature(:, 3)*0.9]);
+            color = hsv2rgb([temperature(:, 1) double(mod(a + 3, 3))*temperature(:, 2) temperature(:, 3)*0.85]);
         end
 
         function setDefaults()
@@ -45,6 +57,7 @@ classdef PlotHelper
             set(groot,'defaultLineLineWidth', PlotHelper.defaultLineLineWidth);
             set(groot,'defaultAxesLineWidth', PlotHelper.defaultAxesLineWidth);
             set(groot,'defaultAxesFontWeight', PlotHelper.defaultAxesFontWeight);
+            set(groot,'defaultLegendBox', 'off');
             hold on;
             axis square;
         end

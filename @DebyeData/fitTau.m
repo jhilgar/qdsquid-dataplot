@@ -11,8 +11,8 @@ function fitTau(obj, varargin)
     obj.Model = table;
     obj.Errors = table;
 
-    ccx0 = [1/(2*pi*((max(obj.Parsed.Frequency) + min(obj.Parsed.Frequency))/2)), 0.2, 1];
-    cclb = [1/(1.1*2*pi*max(obj.Parsed.Frequency)), 0, 0.5];
+    ccx0 = [1/(2*pi*((max(obj.Parsed.Frequency) + min(obj.Parsed.Frequency))/2)), 0.3, 1];
+    cclb = [1/(1.1*2*pi*max(obj.Parsed.Frequency)), 0, 0.2];
     ccub = [1/(0.9*2*pi*min(obj.Parsed.Frequency)), 0.5, 15];
 
     hnx0 = [1/(2*pi*((max(obj.Parsed.Frequency) + min(obj.Parsed.Frequency))/2)), 0.9, 1, 5];
@@ -36,7 +36,7 @@ function fitTau(obj, varargin)
     gs = GlobalSearch('MaxTime', 30, 'Display', 'off');
 
     temps = unique(obj.Parsed.TemperatureRounded);
-    xmodel = logspace(log10(min(obj.Parsed.Frequency)), log10(max(obj.Parsed.Frequency)), 100)';
+    %xmodel = logspace(log10(min(obj.Parsed.Frequency)), log10(max(obj.Parsed.Frequency)), 100)';
 
     cc_vars = {'cc_tau_', 'cc_alpha_', 'cc_chi_t_'};
     cc_vars = cellfun(@(x, y) [x num2str(y)], repmat(cc_vars, 1, obj.nCC), num2cell(ceil((1:3*obj.nCC)/3)), 'UniformOutput', false);
@@ -52,8 +52,9 @@ function fitTau(obj, varargin)
 
     for a = 1:length(temps)
         disp(['Fitting ' num2str(temps(a)) 'K data.']);
-
         rows = obj.Parsed.TemperatureRounded == temps(a);
+        xmodel = logspace(log10(min(obj.Parsed.Frequency(rows))), log10(max(obj.Parsed.Frequency(rows))), 100)';
+        
         problem = createOptimProblem('fmincon', 'x0', x0, ...
                                      'objective', @(b) objective(obj.Parsed.Frequency(rows), [obj.Parsed.ChiIn(rows), obj.Parsed.ChiOut(rows)], p.Results.CC, p.Results.HN, b), ...
                                      'lb', lb, 'ub', ub, 'options', opts); % , 'nonlcon', @(b) constraints(p.Results.CC, p.Results.HN, b)
